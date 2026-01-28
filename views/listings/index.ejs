@@ -4,10 +4,28 @@
     <!-- <form method="get" action="/listings/new">
         <button>Create New Listing</button>
     </form> -->
-    <% for(let list of alllistings) { %>
-    <ul>
-        <li><a href="/listings/<%=list._id%>"><%=list.title %></a></li>
-        
-    </ul>
-    <% } %>
+    <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 gx-4 gy-5">
+
+        <% for(let list of alllistings) { %>
+            <div class="col">
+                <a href="/listings/<%= list._id %>">
+
+                    <div class="card list-card">
+                        <img src="<%= list.image.url?list.image.url:list.image || list.image.filename  %>" class="card-img-top" alt="listing_image">
+                        <div class="card-img-overlay overlay">
+                      <h6 class="card-title"><p><b><%= list.title %></b></p></h6>
+                    
+                  </div>
+                        <div class="card-body">
+                            <p > <%= list.description %></p>
+                            <div class="d-flex justify-content-between align-items-center pt-3">
+                                <p class="card-text"> &#2547;<%= list.price.toLocaleString("en-BD") %> for 1 night</p>
+                                <p><i class="fa-solid fa-star text-secondary"></i> 4.3</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            <% } %>
+        </div>
 </body>

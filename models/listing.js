@@ -9,6 +9,7 @@ const listingSchema= new Schema({
     description:String,
     image:{
         filename:{
+            data:Buffer,
             type:"String",
             default:"listingimage"
         },
