@@ -1,45 +1,102 @@
 <%- layout("/layouts/boilerplate") %>
 <body>
-    <div class="offset-2">
+  <div class="offset-2">
     <h2 class="py-2">Create a new Listing</h2>
-    <form method="post" action="/listings" class="w-75 ">
-        <div class="mb-3">
-            <label for="title" class="form-label" >Title</label>
-            <input name="listing[title]" placeholder="Enter title" id="title" type="text" class="form-control"/>
-        </div>
-        
-        <div class="mb-3">
-            <label for="description" class="form-label" >Description</label>
-            <br>
-            <textarea name="listing[description]" placeholder="Enter description" class="form-control" id="description"></textarea>
-        </div>
-        
-        <div class="mb-3">
-            <label for="image" class="form-label">Image Link</label>
-            <input name="listing[image]" id="image" placeholder="Enter image URL/Link" class="form-control"  type="text" />
-        </div>
-        <div class="row">
-            <div class="mb-3 col-md-6">
-            <label for="price" class="form-label">Price</label>
-            <input name="listing[price]" id="price" placeholder="Enter Price" class="form-control" type="number"/>
-        </div>
-        
+    <form
+      method="post"
+      action="/listings"
+      class="w-75 needs-validation"
+      novalidate
+    >
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          name="listing[title]"
+          placeholder="Enter title"
+          id="title"
+          type="text"
+          required
+          class="form-control"
+        />
+        <div class="invalid-feedback">Please Enter a valid Title.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <br />
+        <textarea
+          name="listing[description]"
+          placeholder="Enter description"
+          class="form-control"
+          required
+          id="description"
+        ></textarea>
+        <div class="invalid-feedback">Please Enter a description.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Image Link</label>
+        <input
+          name="listing[image]"
+          id="image"
+          placeholder="Enter image URL/Link"
+          class="form-control"
+          required
+          type="text"
+        />
+        <div class="invalid-feedback">
+      Please provide a valid Link.
+    </div>
+      </div>
+      <div class="row">
         <div class="mb-3 col-md-6">
-            <label for="country" class="form-label">Country</label>
-            <input name="listing[country]" placeholder="Enter Country" class="form-control" type="text"/>
+          <label for="price" class="form-label">Price</label>
+          <input
+            name="listing[price]"
+            id="price"
+            placeholder="Enter Price"
+            class="form-control"
+            required
+            
+          />
+          <div class="invalid-feedback">
+      Please Enter a valid Price.
+    </div>
         </div>
 
-        </div>
-        
-        
-        <div class="mb-3">
-            <label for="location" class="form-label">Location</label>
-            <input name="listing[location]" placeholder="Enter Location" id="location" class="form-control" type="text"/>
-        </div>
-        
-        <div class="d-grid">
-            <button class="btn btn-dark btn-custom" >Add</button>
-        </div>
-    </form>
+        <div class="mb-3 col-md-6">
+          <label for="country" class="form-label">Country</label>
+          <input
+            name="listing[country]"
+            placeholder="Enter Country"
+            class="form-control"
+            required
+            type="text"
+          />
+          <div class="invalid-feedback">
+      Please Enter a valid Country.
     </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input
+          name="listing[location]"
+          placeholder="Enter Location"
+          id="location"
+          class="form-control"
+          required
+          type="text"
+        />
+        <div class="invalid-feedback">
+      Please Enter a valid Location.
+    </div>
+      </div>
+
+      <div class="d-grid">
+        <button class="btn btn-dark btn-custom py-2 fs-5">Add</button>
+      </div>
+    </form>
+  </div>
 </body>
