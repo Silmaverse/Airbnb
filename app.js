@@ -9,6 +9,7 @@ const methodOverride = require('method-override');
 const ejsmate = require('ejs-mate');
 const listingSchema=require("./schema.js");
 const { error } = require("console");
+const review=require("./models/review.js")
 app.use(methodOverride('_method'))
 
 main().then((res)=>{
@@ -101,6 +102,21 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
     await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
 }));
+
+//Reviews
+//POST ROUTE
+app.post("/listings/:id/reviews" ,async(req,res)=>{
+    let listing=await Listing.findById(req.params.id);
+    let newReview=new review(req.body.review);
+    console.log(newReview)
+    listing.reviews.push(newReview);
+
+    await newReview.save();
+    await listing.save();
+
+    console.log("new review saved");
+    res.redirect(`/listings/${listing._id}`)
+})
 
 
 app.listen(8080 ,(req,res)=>{
