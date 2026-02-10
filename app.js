@@ -7,10 +7,11 @@ const ExpressError=require("./utill/ExpressError.js");
 const path =require("path");
 const methodOverride = require('method-override');
 const ejsmate = require('ejs-mate');
-const listingSchema=require("./schema.js");
-const { error } = require("console");
-const review=require("./models/review.js")
-app.use(methodOverride('_method'))
+const {listingSchema , reviewSchema}=require("./schema.js");
+const listings=require("./routes/listing.js");
+const reviews=require("./routes/review.js");
+const review=require("./models/review.js");
+app.use(methodOverride('_method'));
 
 main().then((res)=>{
     console.log(res)
@@ -34,90 +35,11 @@ app.get("/" ,(req,res)=>{
      res.send("Hi I am root")
 })
 
-const validateListing=(req,res,next)=>{
-   let result=listingSchema.validate(req.body);
-    if(result.error){
-        let errMsg=error.details.map((el)=>el.message.join(","));
-        throw new ExpressError(400, result.error);
-    }else{
-        next();
-    }
-}
-
-//index route
-
-app.get("/listings" , wrapAsync(async(req,res)=>{
-    const alllistings=await Listing.find({});
-    res.render("listings/index.ejs" , {alllistings});
-}))
-
-//New Route
-
-app.get("/listings/new" ,(req,res)=>{
-    res.render("listings/new.ejs");
-})
-
-
-
-//Show route
-
-app.get("/listings/:id" ,wrapAsync(async(req,res)=>{
-    let {id} =req.params;
-    const listing=await Listing.findById(id);
-    res.render("listings/show.ejs" ,{listing})
-
-}))
-
-//Create(post) Route
-app.post("/listings" , validateListing,wrapAsync(async(req,res)=>{
-    
-    const newListing =new Listing(req.body.listing);
-    await newListing.save();
-    // Listing.insertOne(newListing);
-    res.redirect("/listings");
-    
-}))
-
-//Edit Route
-app.get("/listings/:id/edit" ,wrapAsync(async(req ,res)=>{
-    let {id} =req.params;
-    const listing=await Listing.findById(id);
-    console.log(listing)
-    res.render("listings/edit.ejs",{listing})
-}))
-
-//update route
-app.put("/listings/:id",validateListing ,wrapAsync(async(req,res)=>{
-    if(!req.body.listing){
-        throw new ExpressError(400,"Send valid data for listing")
-    }
-    let {id} =req.params;
-    await Listing.findByIdAndUpdate(id ,{...req.body.listing});
-    res.redirect(`/listings/${id}`);
-}))
-
-//destroy route
-app.delete("/listings/:id",wrapAsync(async(req,res)=>{
-    let {id} =req.params;
-    await Listing.findByIdAndDelete(id);
-    res.redirect("/listings");
-}));
+app.use("/listings" ,listings);
 
 //Reviews
-//POST ROUTE
-app.post("/listings/:id/reviews" ,async(req,res)=>{
-    let listing=await Listing.findById(req.params.id);
-    let newReview=new review(req.body.review);
-    console.log(newReview)
-    listing.reviews.push(newReview);
 
-    await newReview.save();
-    await listing.save();
-
-    console.log("new review saved");
-    res.redirect(`/listings/${listing._id}`)
-})
-
+app.use("/listings/:id/reviews" ,reviews);
 
 app.listen(8080 ,(req,res)=>{
     console.log("server is listening")
