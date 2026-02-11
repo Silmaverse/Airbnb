@@ -3,7 +3,7 @@ const router=express.Router({mergeParams:true});
 const wrapAsync=require("../utill/wrapAsync");
 const Listing=require("../models/listing");
 const review=require("../models/review.js");
-const {listingSchema , reviewSchema}=require("../schema.js");
+const {reviewSchema}=require("../schema.js");
 const ExpressError=require("../utill/ExpressError.js");
 
 const validateReview=(req,res,next)=>{

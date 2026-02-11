@@ -1,16 +1,13 @@
 const express= require("express");
 const app= express();
 const mongoose =require("mongoose");
-const Listing=require("./models/listing");
-const wrapAsync=require("./utill/wrapAsync.js");
 const ExpressError=require("./utill/ExpressError.js");
 const path =require("path");
 const methodOverride = require('method-override');
 const ejsmate = require('ejs-mate');
-const {listingSchema , reviewSchema}=require("./schema.js");
+const cookieParser=require("cookie-parser");
 const listings=require("./routes/listing.js");
 const reviews=require("./routes/review.js");
-const review=require("./models/review.js");
 app.use(methodOverride('_method'));
 
 main().then((res)=>{
@@ -31,8 +28,18 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
 }
 
+app.use(cookieParser());
+
 app.get("/" ,(req,res)=>{
      res.send("Hi I am root")
+})
+
+app.get("/getCookies" ,(req,res)=>{
+    res.cookie("greet","assalumwalikum");
+    res.cookie("madeIn","Bangladesh");
+    res.send("Send you Cookies");
+    
+
 })
 
 app.use("/listings" ,listings);

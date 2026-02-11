@@ -2,7 +2,7 @@ const express=require("express");
 const router=express.Router();
 const wrapAsync=require("../utill/wrapAsync");
 const Listing=require("../models/listing");
-const {listingSchema , reviewSchema}=require("../schema.js");
+const {listingSchema }=require("../schema.js");
 const ExpressError=require("../utill/ExpressError.js");
 
 const validateListing=(req,res,next)=>{
