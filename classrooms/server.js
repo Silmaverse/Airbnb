@@ -2,7 +2,25 @@ const express=require("express");
 const app=express();
 const session=require("express-session");
 
-app.use(session({secret:"mysuperscretstring" ,resave:false,saveUninitialized:true}));
+const  sessionOptions={
+     secret:"mysupersecretstring",
+     reasve:false,
+     saveUninitialized:true,
+}; 
+
+app.use(session(sessionOptions));
+
+app.get("/register",(req,res)=>{
+    let {name ="anonymous"}=req.query;
+    req.session.name=name;
+    console.log(req.session.name);
+    res.redirect("/hello")
+    // res.send(name);
+});
+
+app.get("/hello",(req,res)=>{
+    res.send(`Hello ${req.session.name} how are you`)
+})
 
 app.get("/reqcount",(req,res)=>{
     if(req.session.count){
