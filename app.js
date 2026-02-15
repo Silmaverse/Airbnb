@@ -8,7 +8,14 @@ const ejsmate = require('ejs-mate');
 const cookieParser=require("cookie-parser");
 const listings=require("./routes/listing.js");
 const reviews=require("./routes/review.js");
+const session=require("express-session");
+const flash = require('connect-flash');
+
+
+
 app.use(methodOverride('_method'));
+app.use(flash());
+
 
 main().then((res)=>{
     console.log(res)
@@ -28,6 +35,19 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
 }
 
+const  sessionOptions={
+     secret:"mysupersecretstring",
+     reasve:false,
+     saveUninitialized:true,
+     cookie:{
+        expires:Date.now()+7*24*60*60*1000,
+        maxAge:7*24*60*60*1000,
+        httpOnly:true,
+     }
+}; 
+
+app.use(session(sessionOptions));
+
 app.use(cookieParser());
 
 app.get("/" ,(req,res)=>{
@@ -41,6 +61,13 @@ app.get("/getCookies" ,(req,res)=>{
     
 
 })
+
+app.use((req,res,next)=>{
+    res.locals.success=req.flash("success");
+    res.locals.error=req.flash("error");
+    next();
+})
+
 
 app.use("/listings" ,listings);
 

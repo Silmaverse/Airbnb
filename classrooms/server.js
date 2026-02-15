@@ -1,25 +1,38 @@
 const express=require("express");
 const app=express();
+const path=require("path");
 const session=require("express-session");
+var flash = require('connect-flash');
+app.set("view engine", "ejs");
+app.set("views",path.join(__dirname , "views"));
 
-const  sessionOptions={
-     secret:"mysupersecretstring",
-     reasve:false,
-     saveUninitialized:true,
-}; 
 
-app.use(session(sessionOptions));
+
+app.use(flash());
+
+app.use((req,res,next)=>{
+    res.locals.successMsg=req.flash("success");
+    res.locals.errorMsg=req.flash("error");
+    next();
+})
 
 app.get("/register",(req,res)=>{
     let {name ="anonymous"}=req.query;
     req.session.name=name;
-    console.log(req.session.name);
+    if(name==="anonymous"){
+       req.flash("error",'user not registered successfully');
+       console.log(req.flash)
+
+    }else{
+       req.flash("success",'user registered successfully');
+    }
     res.redirect("/hello")
     // res.send(name);
 });
 
 app.get("/hello",(req,res)=>{
-    res.send(`Hello ${req.session.name} how are you`)
+    // res.locals.messages=req.flash
+    res.render("page.ejs",{name:req.session.name});
 })
 
 app.get("/reqcount",(req,res)=>{
