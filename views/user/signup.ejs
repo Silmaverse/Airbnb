@@ -1,11 +1,11 @@
 <%- layout("/layouts/boilerplate.ejs") %>
 
 <div class="row mt-2">
-  <h2 class="col-6 offset-3 mt-2">SignUp on wanderlust</h2>
+  <h2 class="col-6 offset-3 mt-2 brandColor">SignUp on wanderlust</h2>
   <div class="col-6 offset-3">
     <form action="/signup" method="post" novalidate class="needs-validation">
       <div class="my-3">
-        <label for="username" class="form-label fs-3">Username</label>
+        <label for="username" class="form-label fs-3 text-dark">Username</label>
         <input
           name="username"
           placeholder="Enter Username"
@@ -17,7 +17,7 @@
         <div class="invalid-feedback">Please Enter a valid Title.</div>
       </div>
       <div class="my-3">
-        <label for="email" class="form-label fs-3">Email</label>
+        <label for="email" class="form-label fs-3 text-dark">Email</label>
         <input
           name="email"
           placeholder="Enter email"
@@ -29,7 +29,7 @@
         <div class="invalid-feedback">Please Enter a valid Email.</div>
       </div>
       <div class="my-3">
-        <label for="password" class="form-label fs-3">Password</label>
+        <label for="password" class="form-label fs-3 text-dark">Password</label>
         <input
           name="password"
           placeholder="Enter Password"
@@ -40,7 +40,7 @@
         />
         <div class="invalid-feedback">Please Enter a valid Password.</div>
       </div>
-      <button class="btn btn-success">Sign Up</button>
+      <button class="btn btn-custom w-100 py-2 mt-2">Sign Up</button>
     </form>
   </div>
 </div>

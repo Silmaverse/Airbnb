@@ -2,11 +2,12 @@ const express=require("express");
 const router=express.Router();
 const user=require("../models/user");
 const wrapAsync = require("../utill/wrapAsync");
+const passport = require("passport");
 
 
 router.get("/signup" ,(req,res)=>{
-    res.render("user/user.ejs");
-})
+    res.render("user/signup.ejs");
+});
 
 router.post("/signup", wrapAsync(async(req,res)=>{
     try{
@@ -18,8 +19,24 @@ router.post("/signup", wrapAsync(async(req,res)=>{
         res.redirect("/listings");
     }catch(e){
         req.flash("error",e.message);
-        res.redirect("/listings");
+        res.redirect("/signup");
     }
-}))
+}));
+
+
+router.get("/login" ,(req,res)=>{
+    res.render("user/login.ejs")
+})
+
+router.post("/login" , passport.authenticate('local',{
+    failureRedirect:"/login",
+    failureFlash:true,
+}), async(req,res)=>{
+    req.flash("success","Welcome to Wanderlust");
+    res.redirect("/listings");
+}
+
+)
+
 
 module.exports=router;
