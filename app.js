@@ -6,15 +6,22 @@ const path =require("path");
 const methodOverride = require('method-override');
 const ejsmate = require('ejs-mate');
 const cookieParser=require("cookie-parser");
+// router list start
 const listings=require("./routes/listing.js");
 const reviews=require("./routes/review.js");
+const userRouter=require("./routes/user.js")
+
 const session=require("express-session");
 const flash = require('connect-flash');
 
+const passport=require("passport");
+const LocalStrategy=require("passport-local");
+const User=require("./models/user.js");
 
 
 app.use(methodOverride('_method'));
-app.use(flash());
+
+
 
 
 main().then((res)=>{
@@ -37,7 +44,7 @@ async function main() {
 
 const  sessionOptions={
      secret:"mysupersecretstring",
-     reasve:false,
+     resave:false,
      saveUninitialized:true,
      cookie:{
         expires:Date.now()+7*24*60*60*1000,
@@ -47,8 +54,15 @@ const  sessionOptions={
 }; 
 
 app.use(session(sessionOptions));
+app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 app.use(cookieParser());
+
 
 app.get("/" ,(req,res)=>{
      res.send("Hi I am root")
@@ -69,11 +83,14 @@ app.use((req,res,next)=>{
 })
 
 
+
 app.use("/listings" ,listings);
 
 //Reviews
 
 app.use("/listings/:id/reviews" ,reviews);
+
+app.use("/" ,userRouter);
 
 app.listen(8080 ,(req,res)=>{
     console.log("server is listening")
