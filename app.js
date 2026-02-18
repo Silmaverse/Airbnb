@@ -23,23 +23,22 @@ app.use(methodOverride('_method'));
 
 
 
-
-main().then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
-
 app.set("view engine", "ejs");
 app.set("views",path.join(__dirname , "views"));
 app.use(express.urlencoded({extended:true}));
 app.engine('ejs', ejsmate);
 app.use(express.static(path.join(__dirname,"public")));
 
+main().catch((err)=>{
+    console.log(err)
+})
+
+
 
 async function main() {
     
     await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+    console.log("connected to Db")
 }
 
 const  sessionOptions={
@@ -79,6 +78,7 @@ app.get("/getCookies" ,(req,res)=>{
 app.use((req,res,next)=>{
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
+    res.locals.currUser=req.user;
     next();
 })
 
@@ -92,9 +92,6 @@ app.use("/listings/:id/reviews" ,reviews);
 
 app.use("/" ,userRouter);
 
-app.listen(8080 ,(req,res)=>{
-    console.log("server is listening")
-})
 
 app.all("/*splat",(req,res,next)=>{
     console.log("invalid path")
@@ -107,3 +104,6 @@ app.use((err,req,res,next)=>{
     res.status(statusCode).render("Error/Error.ejs",{message,statusCode});
     // res.status(statusCode).send(message);
 })    
+app.listen(8080 ,(req,res)=>{
+    console.log("server is listening")
+})
