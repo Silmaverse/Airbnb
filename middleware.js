@@ -8,6 +8,7 @@ module.exports.isLoggedIn = (req, res, next) => {
   console.log(req);
   if (!req.isAuthenticated()) {
     req.session.redirectUrl = req.originalUrl;
+    console.log(req.session.redirectUrl)
     req.flash("error", "you must be looged in to create listing ");
     return res.redirect("/login");
   }
