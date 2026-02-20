@@ -1,6 +1,5 @@
 const express=require("express");
 const router=express.Router();
-const user=require("../models/user");
 const passport = require("passport");
 const { savRedirectUrl } = require("../middleware");
 const { signup, renderSignupForm, renderLogin, login, logout } = require("../controllers/usercontroller");

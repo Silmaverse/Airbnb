@@ -1,4 +1,5 @@
 const wrapAsync = require("../utill/wrapAsync");
+const user=require("../models/user");
 
 
 module.exports.renderSignupForm=(req,res)=>{
