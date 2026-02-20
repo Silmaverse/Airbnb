@@ -6,6 +6,7 @@
       method="post"
       action="/listings"
       class="w-75 needs-validation"
+      enctype="multipart/form-data"
       novalidate
     >
       <div class="mb-3">
@@ -35,14 +36,14 @@
       </div>
 
       <div class="mb-3">
-        <label for="image" class="form-label">Image Link</label>
+        <label for="image" class="form-label">Upload a Image</label>
         <input
           name="listing[image]"
           id="image"
           placeholder="Enter image URL/Link"
           class="form-control"
           required
-          type="text"
+          type="file"
         />
         <div class="invalid-feedback">
       Please provide a valid Link.

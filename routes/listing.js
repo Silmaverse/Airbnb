@@ -1,33 +1,33 @@
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utill/wrapAsync");
-const Listing = require("../models/listing");
-const ExpressError = require("../utill/ExpressError.js");
+const multer  = require('multer')
+const {storage}=require("../cloudConfig.js");
+const upload = multer({ storage })
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 const {index, renderNewForm, showdetailsofItem, postItem, editTheItem, updateTheItem, destroy}=require("../controllers/listingController.js");
 
 //index route
-
-router.get(
-  "/",
+router.route("/").get(
   wrapAsync(index),
-);
-
-//New Route
-
-router.get("/new", isLoggedIn, renderNewForm);
-
-//Show route
-
-router.get(
-  "/:id", showdetailsofItem);
-
-//Create(post) Route
-router.post(
-  "/",
+).post(
   isLoggedIn,
+  upload.single('listing[image]'),
   validateListing,
   postItem
+);
+router.get("/new", isLoggedIn, renderNewForm);
+//New Route
+router.route("/:id").get(
+   showdetailsofItem).put(
+  isLoggedIn,
+  isOwner,
+  validateListing,
+  updateTheItem
+).delete(
+  isLoggedIn,
+  isOwner,
+  destroy
 );
 
 //Edit Route
@@ -38,21 +38,6 @@ router.get(
   editTheItem
 );
 
-//update route
-router.put(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  validateListing,
-  updateTheItem
-);
 
-//destroy route
-router.delete(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  destroy
-);
 
 module.exports = router;
