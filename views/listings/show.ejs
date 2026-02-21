@@ -15,9 +15,9 @@
         <p class="py-1"><%= listing.location %></p>
         <p class="py-1"><%= listing.country %></p>
         <p class="brandColor">Host : <i><%= listing.owner.username %></i></p>
-        <h5 class="py-2">All Reviews</h5>
         <div class="row my-2">
           <% for(review of listing.reviews) {%>
+            <h5 class="py-2">All Reviews</h5>
             <div class="card col-5 ms-2 mb-2">
               <div class="card-body">
                 <h5 class="card-title"><%= review.author.username %></h5>
@@ -34,6 +34,11 @@
             <% } %>
           </div>
            <% if(currUser && currUser._id.equals(listing.owner._id)) { %> 
+            <div class="col-8 ">
+              <h3>Where you’ll be</h3>
+              <div id="map"></div>
+
+             </div>
         <div class="d-flex gap-3 py-2">
           <a 
             href="/listings/<%= listing._id %>/edit"

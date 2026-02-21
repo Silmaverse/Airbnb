@@ -22,6 +22,7 @@ router.route("/:id").get(
    showdetailsofItem).put(
   isLoggedIn,
   isOwner,
+  upload.single('listing[image]'),
   validateListing,
   updateTheItem
 ).delete(

@@ -123,3 +123,9 @@ a{
 }
 
 /* show list details end */
+/* map style start */
+#map { 
+    height: 300px;
+    width: 300px;
+}
+/* map style end */

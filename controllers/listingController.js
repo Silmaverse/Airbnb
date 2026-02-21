@@ -25,6 +25,9 @@ module.exports.showdetailsofItem = wrapAsync(async (req, res) => {
     req.flash("error", "Listing you requseted does not exist");
     res.redirect("/");
   }
+
+  
+
   res.render("listings/show.ejs", { listing });
 });
 
@@ -44,7 +47,10 @@ module.exports.postItem = wrapAsync(async (req, res) => {
 module.exports.editTheItem = wrapAsync(async (req, res) => {
   let { id } = req.params;
   const listing = await Listing.findById(id);
-  res.render("listings/edit.ejs", { listing });
+  let originalImageurl= listing.image.url;
+  originalImageurl=originalImageurl.replace("/upload" ,"/upload/h_300,w_250");
+  console.log(originalImageurl)
+  res.render("listings/edit.ejs", { listing ,originalImageurl });
 });
 
 module.exports.updateTheItem = wrapAsync(async (req, res) => {
@@ -52,7 +58,13 @@ module.exports.updateTheItem = wrapAsync(async (req, res) => {
     throw new ExpressError(400, "Send valid data for listing");
   }
   let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  let listing=await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  if(req.file){
+    let url=req.file.path;
+    let  filename=req.file.filename;
+    listing.image={url ,filename};
+    await listing.save();
+  }
   req.flash("success", "Listing updated successfully");
   res.redirect(`/listings/${id}`);
 });
