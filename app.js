@@ -66,9 +66,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(cookieParser());
 
 
-app.get("/" ,(req,res)=>{
-     res.send("Hi I am root")
-})
+
 
 app.get("/getCookies" ,(req,res)=>{
     res.cookie("greet","assalumwalikum");
