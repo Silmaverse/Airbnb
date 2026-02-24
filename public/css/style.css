@@ -20,6 +20,8 @@ ul,li{
 }
 a{
     text-decoration: none;
+    margin: 0px !important;
+    padding: 0px !important;
 }
 
 .navbar{

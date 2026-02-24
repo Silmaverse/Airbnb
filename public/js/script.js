@@ -18,3 +18,11 @@
   })
 })()
 
+
+let taxswicth=document.querySelector("#switchCheckDefault");
+let taxdisplay= document.querySelectorAll(".displayTax");
+ taxswicth.addEventListener("click",()=>{
+    for(tax of taxdisplay){
+      tax.classList.toggle("d-none")
+    }
+})
