@@ -131,3 +131,17 @@ a{
     width: 1000px;
 }
 /* map style end */
+/* adding style to tax switch */
+.taxswitch{
+    border: 2px solid gray;
+    padding: 10px ;
+    border-radius: 8px;
+}
+
+.mountain{
+    opacity: 0.8;
+}
+.mountain:hover{
+    opacity: 1;
+    cursor: pointer;
+}
