@@ -32,19 +32,21 @@ app.use(express.urlencoded({extended:true}));
 app.engine('ejs', ejsmate);
 app.use(express.static(path.join(__dirname,"public")));
 
+console.log(process.env.ATLASDB_URL)
+const mongourl=process.env.ATLASDB_URL
+console.log(mongourl)
 
 
+async function main() {
+    await mongoose.connect(mongourl);
+    
+    // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+}
 main().then(()=>{
    console.log("connected to db")
 }).catch((err)=>{
     console.log(err)
 })
-
-async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
-
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
-}
 
 const  sessionOptions={
      secret:"mysupersecretstring",
