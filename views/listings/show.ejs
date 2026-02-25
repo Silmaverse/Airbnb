@@ -14,12 +14,13 @@
       <div class="card-body">
         <h5 class="card-title py-1"><%= listing.title %></h5>
         <p><%=listing.description %></p>
+        <p><b><%= listing.category %></b></p>
         <p class="card-text py-1">
           &#2547;<%= listing.price.toLocaleString("en-Bd") %>
         </p>
         <p class="py-1"><%= listing.location %></p>
         <p class="py-1"><%= listing.country %></p>
-        <p class="brandColor">Host : <i><%= listing.owner.username %></i></p>
+        <p class="brandColor">Host : <i><%= listing.owner?.username|| "Airbnb host" %></i></p>
         <div class="row my-2">
           <% for(review of listing.reviews) {%>
             <h5 class="py-2">All Reviews</h5>

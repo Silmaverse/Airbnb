@@ -22,7 +22,7 @@ module.exports.showdetailsofItem = wrapAsync(async (req, res) => {
         path: "author",
       },
     })
-    .populate("owner");
+    // .populate("owner");
   console.log(listing);
   if (!listing) {
     req.flash("error", "Listing you requseted does not exist");
@@ -47,6 +47,7 @@ module.exports.postItem = wrapAsync(async (req, res) => {
   newListing.image = { url, filename };
   let saveDListing=newListing.geometry=response.body.features[0].geometry;
   console.log(saveDListing)
+  console.log(newListing)
   await newListing.save();
   req.flash("success", "New Listing created");
   // Listing.insertOne(newListing);

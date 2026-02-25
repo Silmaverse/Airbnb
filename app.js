@@ -32,9 +32,8 @@ app.use(express.urlencoded({extended:true}));
 app.engine('ejs', ejsmate);
 app.use(express.static(path.join(__dirname,"public")));
 
-console.log(process.env.ATLASDB_URL)
 const mongourl=process.env.ATLASDB_URL
-console.log(mongourl)
+
 
 
 async function main() {

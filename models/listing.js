@@ -8,6 +8,10 @@ const listingSchema= new Schema({
         required:true
     },
     description:String,
+    category:{
+        type:String,
+        enum:['Winter','Summer','Cloudy','Igloo','Boat','Street','City','Tree','Flower','Mountain','Tent']
+    },
     image:{
         filename:String,
         url:String,
