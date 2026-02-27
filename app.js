@@ -9,12 +9,13 @@ const path =require("path");
 const methodOverride = require('method-override');
 const ejsmate = require('ejs-mate');
 const cookieParser=require("cookie-parser");
+const session=require("express-session");
+const MongoStore = require('connect-mongo').default;
 // router list start
 const listings=require("./routes/listing.js");
 const reviews=require("./routes/review.js");
 const userRouter=require("./routes/user.js")
 
-const session=require("express-session");
 const flash = require('connect-flash');
 
 const passport=require("passport");
@@ -31,14 +32,13 @@ app.set("views",path.join(__dirname , "views"));
 app.use(express.urlencoded({extended:true}));
 app.engine('ejs', ejsmate);
 app.use(express.static(path.join(__dirname,"public")));
-
-const mongourl=process.env.ATLASDB_URL
+const dburl=process.env.ATLASDB_URL
+console.log(dburl)
 
 
 
 async function main() {
-    await mongoose.connect(mongourl);
-    
+    await mongoose.connect(dburl);
     // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 main().then(()=>{
@@ -47,8 +47,23 @@ main().then(()=>{
     console.log(err)
 })
 
+
+
+const store=MongoStore.create({
+    mongoUrl:dburl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter:24*3600,
+})
+
+store.on("error",()=>{
+    console.log("Error in mongo session store" ,err)
+})
+
 const  sessionOptions={
-     secret:"mysupersecretstring",
+     store,
+     secret:process.env.SECRET,
      resave:false,
      saveUninitialized:true,
      cookie:{
