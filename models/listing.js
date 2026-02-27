@@ -1,6 +1,7 @@
 const mongoose =require("mongoose");
 const Schema=mongoose.Schema;
 const review=require("./review.js");
+const { required } = require("joi");
 
 const listingSchema= new Schema({
     title:{
@@ -10,7 +11,8 @@ const listingSchema= new Schema({
     description:String,
     category:{
         type:String,
-        enum:['Winter','Summer','Cloudy','Igloo','Boat','Street','City','Tree','Flower','Mountain','Tent']
+        enum:['Winter','Summer','Cloudy','Igloo','Boat','Street','City','Tree','Flower','Mountain','Tent'],
+        required:true
     },
     image:{
         filename:String,

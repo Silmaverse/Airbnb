@@ -35,18 +35,24 @@
         <div class="invalid-feedback">Please Enter a description.</div>
       </div>
 
-      <!-- <div class="mb-3">
+      <div class="mb-3">
         <label for="category" class="form-label">Category</label>
         <br />
-        <input
-          name="listing[category]"
-          placeholder="Enter category"
-          class="form-control"
-          required
-          id="category"
-        />
-        <div class="invalid-feedback">Please Enter a description.</div>
-      </div> -->
+        <select class="form-select"  name="listing[category]" id="category" required>
+          <option value="" disabled selected>Select Category</option>
+          <option value="Winter">Winter</option>
+          <option value="Summer">Summer</option>
+          <option value="Cloudy">Cloudy</option>
+          <option value="Igloo">Igloo</option>
+          <option value="Boat">Boat</option>
+          <option value="Street">Street</option>
+          <option value="City">City</option>
+          <option value="Tree">Tree</option>
+          <option value="Flower">Flower</option>
+          <option value="Mountain">Mountain</option>
+          <option value="Tent">Tent</option>
+        </select>
+      </div>
 
       <div class="mb-3">
         <label for="image" class="form-label">Upload a Image</label>
@@ -58,9 +64,7 @@
           required
           type="file"
         />
-        <div class="invalid-feedback">
-      Please provide a valid Link.
-    </div>
+        <div class="invalid-feedback">Please provide a valid Link.</div>
       </div>
       <div class="row">
         <div class="mb-3 col-md-6">
@@ -71,11 +75,8 @@
             placeholder="Enter Price"
             class="form-control"
             required
-            
           />
-          <div class="invalid-feedback">
-      Please Enter a valid Price.
-    </div>
+          <div class="invalid-feedback">Please Enter a valid Price.</div>
         </div>
 
         <div class="mb-3 col-md-6">
@@ -87,9 +88,7 @@
             required
             type="text"
           />
-          <div class="invalid-feedback">
-      Please Enter a valid Country.
-    </div>
+          <div class="invalid-feedback">Please Enter a valid Country.</div>
         </div>
       </div>
 
@@ -103,9 +102,7 @@
           required
           type="text"
         />
-        <div class="invalid-feedback">
-      Please Enter a valid Location.
-    </div>
+        <div class="invalid-feedback">Please Enter a valid Location.</div>
       </div>
 
       <div class="d-grid">
