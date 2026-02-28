@@ -16,6 +16,10 @@ const listings=require("./routes/listing.js");
 const reviews=require("./routes/review.js");
 const userRouter=require("./routes/user.js")
 
+const {index}=require("./controllers/listingController");
+const wrapAsync = require("./utill/wrapAsync");
+
+
 const flash = require('connect-flash');
 
 const passport=require("passport");
@@ -33,7 +37,6 @@ app.use(express.urlencoded({extended:true}));
 app.engine('ejs', ejsmate);
 app.use(express.static(path.join(__dirname,"public")));
 const dburl=process.env.ATLASDB_URL
-console.log(dburl)
 
 
 
@@ -101,7 +104,7 @@ app.use((req,res,next)=>{
     next();
 })
 
-
+app.get("/",wrapAsync(index))
 
 app.use("/listings" ,listings);
 

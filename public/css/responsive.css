@@ -1,0 +1,30 @@
+@media (min-width: 320px) and (max-width: 575.98px) {
+  .navimg {
+    width: 45px !important;
+    height: 45px;
+  }
+  .smallnav {
+    width: 100%;
+    background-color: white;
+    gap: 10px;
+  }
+
+  .allFilters {
+    gap: 20px;
+  }
+  .allCategory {
+    justify-content: center;
+  }
+  .navmenu {
+    display: flex;
+    gap: 20px;
+    padding-top: 10px;
+  }
+
+  .total_row {
+    gap: 15px;
+  }
+  .list-card {
+    width: 18rem;
+  }
+}
